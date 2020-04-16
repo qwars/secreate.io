@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo
+    hostname: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+  server:
+    build: server/
+    command: node ./server.js
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+  client:
+    build: publick/
+    command: http-server ./publick
+    network_mode: host
+    ports:
+      - "9090:9090"
+    depends_on:
+      - server
