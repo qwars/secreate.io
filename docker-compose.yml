@@ -15,7 +15,7 @@ services:
       - mongo
   client:
     build: public/
-    command: http-server ./publick
+    command: http-server ./ -p 8089 -c 1 --push-state
     network_mode: host
     ports:
       - "8089:8089"
