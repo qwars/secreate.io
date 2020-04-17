@@ -1,0 +1,49 @@
+
+display-flex()
+	display arguments[0] || flex
+	align-items arguments[1] || center
+	justify-content arguments[2] || arguments[1] || center
+
+position-full-layer()
+	position arguments
+	top: 0px
+	right: 0px
+	bottom: 0px
+	left: 0px
+
+output
+	position-full-layer fixed
+	z-index: -1
+
+font-family = {
+	text: '-apple-system, "Segoe UI", system-ui, Roboto, "Noto Sans", "Helvetica Neue", sans-serfi',
+	title: '-apple-system, "Segoe UI", system-ui, Roboto, "Noto Sans", "Helvetica Neue", sans-serfi',
+	extra: '-apple-system, "Segoe UI", system-ui, Roboto, "Noto Sans", "Helvetica Neue", sans-serfi'
+}
+
+font = {
+	text: normal normal 400 normal 13px \/ normal unquote( font-family.text ),
+	title: normal normal 400 normal 13px \/ normal unquote( font-family.title ),
+	extra: normal normal 400 normal 13px \/ normal unquote( font-family.extra )
+}
+
+color-calm = {
+	text: rgb( 64, 64, 64 )
+	title: rgb( 196, 196, 196 ),
+	extra: rgb( 176,176, 176 ),
+	link: rgb(61, 126, 154),
+	background: rgb(204, 204, 204),
+	mark: rgb( 236,236,236 ),
+	error: rgb( 176,176, 176 ),
+	warning: rgb( 176,176, 176 ),
+	info: rgb(194, 232, 249)
+}
+
+color = {}
+color-hover = {}
+color-active = {}
+
+for p in keys( color-calm )
+	color[ p ] = color-calm[ p ]
+	color-hover[ p ] = color-calm[ p ]
+	color-active[ p ] = color-calm[ p ]

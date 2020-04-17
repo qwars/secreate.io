@@ -1,4 +1,5 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
+@import './css-settings.styl'
 
 html
 	min-height: 100%
@@ -9,14 +10,14 @@ html
 body
 	margin: 0px
 	padding: 0px
-	font: normal normal 400 normal 13px / normal -apple-system, "Segoe UI", system-ui, Roboto, "Noto Sans", "Helvetica Neue", sans-serfi
+	font: font.text
 	display: grid
 	grid-template-rows: auto 1fr auto
-	color: rgb( 64, 64, 64 )
+	color: color.text
 	min-width: 642px
 	min-height: 100%
 	::selection
-		background: rgb(214,214,214)
+		background: color.mark
 		box-shadow: none
 		outline: 0px solid transparent
 	:focus
@@ -28,4 +29,4 @@ body
 	::-internal-autofill-selected:focus,
 	::-internal-autofill-selected:active
 		background-color: white !important
-		color: rgb( 64, 64, 64 )
+		color: color.text
