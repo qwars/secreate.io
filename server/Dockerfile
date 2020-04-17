@@ -1,0 +1,7 @@
+FROM node:10
+
+WORKDIR /server
+
+COPY . .
+
+EXPOSE 3000
