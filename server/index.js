@@ -1,5 +1,5 @@
 var self = {};
-var DataBase = require('./database').DataBase;
+// import DataBase from './database'
 var Collection = require('./collection').Collection;
 var WebSocketServer = require('websocket').server;
 
@@ -9,31 +9,30 @@ const http = require('http');
 
 const bodyParser = require('body-parser');
 
-const db = new DataBase('mongodb://mongo:27017/');
-const collection = new Collection(db);
+// const db = DataBase.new 'mongodb://mongo:27017/'
+const collection = new Collection(null);
 
 app.use(bodyParser.urlencoded(
 	{extended: false}
 ));
 app.use(bodyParser.json());
 
-const clientUrl = 'http://localhost:8081';
+const clientUrl = 'http://localhost:3000';
 const corsOptions = cors({
 	origin: clientUrl,
 	optionsSuccessStatus: 200
 });
 
-app.use(cors);
+app.use(cors());
 app.all('/*',function(req,res,next) {
 	res.header('Access-Control-Allow-Origin',clientUrl);
 	res.header('Access-Control-Allow-Headers','X-Requested-With');
 	return next();
 });
 
-app.listen(3000);
+app.listen(3000,function() { return console.log("Server started on port  3000 :)"); });
 
 const connections = new Set();
-const lastModification = 0;
 
 const server = http.createServer(app);
 
@@ -45,28 +44,26 @@ server.listen(8999,function() { return console.log(("Server started on port " + 
 
 const observerConnections = function(resource) { return connections.forEach(function(connection) { return connection.send(resource); }); };
 
-socket.on('connection',function(request) {
+socket.on('request',function(request) {
 	
-	const connection = request;
+	const connection = request.accept(null,request.origin);
 	connections.add(connection);
 	collection.getContent().then(
-		function(resource) { return connection.send(self.res().json(resource)); },
+		function(resource) { return connection.send(JSON.stringify(resource)); },
 		function(err) { return self.res().json('error',err); }
 	);
 	
 	return socket.on('close',function(request) { return connections.delete(connection); });
 });
 
-app.get('/elements',corsOptions,function(req,res) {
+app.get('/',corsOptions,function(req,res) {
 	return collection.getContent().then(
 		function(resource) { return res.json(resource); },
 		function(err) { return res.json('error',err); }
 	);
 });
 
-app.post('/elements',corsOptions,function(req,res) {
-	return collection.setContent(req.body().order()).then(
-		function(resource) { return observerConnections(JSON.stringify(resource)); },
-		function(err) { return res.json('error',err); }
-	);
+app.post('/',corsOptions,function(req,res) {
+	return observerConnections(JSON.stringify(collection.setContent(req.body)));
 });
+
