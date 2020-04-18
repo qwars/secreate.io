@@ -1,18 +1,18 @@
 version: "3"
 services:
-  mongo:
-    container_name: mongo
-    hostname: mongo
-    image: mongo
-    ports:
-      - "27017:27017"
+  # mongo:
+  #   container_name: mongo
+  #   hostname: mongo
+  #   image: mongo
+  #   ports:
+  #     - "27017:27017"
   server:
     build: server/
     command: node ./index.js
     ports:
       - "3000:3000"
-    links:
-      - mongo
+    # links:
+    #   - mongo
   client:
     build: public/
     command: http-server ./ -p 8089 -c 1 --push-state
