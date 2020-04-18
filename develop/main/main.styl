@@ -8,3 +8,31 @@ main
 		width: 100%
 		td, th
 			border: 1px solid color.background
+			&:not(:first-child)
+				text-align: center
+		.is-light
+			color: white
+	details
+		display: block
+		position: relative
+		font: font.text
+		text-align: left
+		margin: .8em
+		text-transform: uppercase
+		summary
+			white-space: nowrap
+			cursor: pointer
+		ul
+			position: absolute
+			min-width: 100%
+			background: white
+			border: 1px solid color.background
+			margin: 0px
+			padding: 0px
+			list-style: none
+			li
+				margin: 6px 0px
+				padding: 0px 12px
+				cursor: pointer
+				&:hover
+					background-color: color.mark
